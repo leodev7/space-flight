@@ -55,7 +55,7 @@ body
   font-family: 'Roboto Condensed'
 
 .container
-  width: 960px
+  max-width: 960px
   margin: 3rem auto 0
 
 </style>
