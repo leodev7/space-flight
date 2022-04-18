@@ -19,6 +19,19 @@
           </div>
         </nav>
 
+        <section class="row">
+          <div class="col-12">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+
+              <q-img src="img/logo-nasa.jpg" width="200px" />
+              <h5 class="q-my-none">Space Flight News</h5>
+
+            </div>
+          </div>
+        </section>
+
+        <q-separator class="q-my-xl" />
+
       </div>
 
   </q-page>
@@ -37,7 +50,12 @@ export default {
 </script>
 
 <style lang="sass">
+
+body
+  font-family: 'Roboto Condensed'
+
 .container
-  max-width: 960px
+  width: 960px
   margin: 3rem auto 0
+
 </style>
