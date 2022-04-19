@@ -3,16 +3,15 @@
 
     <div class="container">
 
-      <q-table class="no-shadow no-border" hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[10]" @request="onLoadCurrentFilter" >
+      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[10]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
           <div class="col-12">
             <div class="flex justify-end q-col-gutter-sm">
 
-              <q-input dense outlined v-model="text" label="Search">
+              <q-input dense outlined color="black" v-model="filter.title" label="Search">
                 <template v-slot:append>
-                  <q-icon v-if="text !== ''" name="close" @click="text = ''" class="cursor-pointer" />
-                  <q-icon name="search" class="cursor-pointer" />
+                  <q-icon v-if="filter.title !== ''" name="close" @click="filter.title = ''" class="cursor-pointer" />
                 </template>
               </q-input>
 
@@ -79,7 +78,9 @@ export default {
   name: 'IndexPage',
   data () {
     return {
-      text: '',
+      filter: {
+        title: ''
+      },
       sortSelected: 'Sort',
 
       articlesColumns:[],
@@ -105,6 +106,15 @@ export default {
 
     dateFormated (value) {
       return date.formatDate(value, 'DD/MM/YYYY - HH:mm:ss')
+    },
+
+    filterData(rows, terms) {
+      for (const term in terms) { 
+        rows = rows.filter(row =>
+          (row[term] + '').toLowerCase().indexOf(terms[term].toLowerCase()) !== -1
+        )
+      }
+      return rows
     }
   }
 }
