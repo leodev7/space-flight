@@ -35,9 +35,7 @@
               <div class="col-sm-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
                 <q-img class="rounded-borders" :src="props.row.imageUrl" style="min-width: 380px" :ratio="1">
                   <template v-slot:error>
-                    <div class="absolute-full flex flex-center bg-negative text-white">
-                      Erro no servidor da imagem
-                    </div>
+                    <q-img src="img/error-image.jpeg" />
                   </template>
                 </q-img>
               </div>
