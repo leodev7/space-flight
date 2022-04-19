@@ -30,7 +30,31 @@
           </div>
         </section>
 
-        <q-separator class="q-my-xl" />
+        <q-separator color="grey" size="2px" class="q-my-xl" />
+
+        <section class="row justify-center q-my-xl q-py-lg" v-for="(article, index) in articles" :key="article.id">
+          <div class="col-8">
+
+            <div class="flex q-col-gutter-xl" :style="index % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
+              <div class="col" :style="index % 2 === 0 ? '' : 'text-align: right'">
+                <q-img class="rounded-borders" :src="article.imageUrl" :ratio="1" />
+              </div>
+
+              <div class="col">
+                <p style="font-size: 1rem; font-weight: bold; margin: 0">{{ article.title }}</p>
+                <div class="flex justify-between">
+                  <p>{{ dateFormated(article.publishedAt) }}</p>
+                  <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="article.newsSite" />
+                </div>
+                <p style="letter-spacing: 0.1em;">{{ article.summary }}</p>
+                <q-btn color="primary" label="Ver mais" />
+              </div>
+            </div>
+
+            <q-separator style="background: #D07017" size="2px" class="q-mt-xl" />
+
+          </div>
+        </section>
 
       </div>
 
@@ -38,12 +62,37 @@
 </template>
 
 <script>
+import { date } from 'quasar'
+
 export default {
   name: 'IndexPage',
   data () {
     return {
       text: '',
-      sortSelected: 'Sort'
+      sortSelected: 'Sort',
+
+      articles: []
+    }
+  },
+
+  mounted () {
+    this.onLoadCurrentFilter()
+  },
+
+  methods: {
+
+    onLoadCurrentFilter ()  {
+      this.$axios({ method: 'get', url: 'https://api.spaceflightnewsapi.net/v3/articles' })
+        .then((response) => {
+          this.articles = response.data
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    dateFormated (value) {
+      return date.formatDate(value, 'DD/MM/YYYY - HH:mm:ss')
     }
   }
 }
@@ -53,6 +102,7 @@ export default {
 
 body
   font-family: 'Roboto Condensed'
+  color: #1E2022
 
 .container
   max-width: 960px
