@@ -26,15 +26,15 @@
               <h5 class="q-my-none">Space Flight News</h5>
             </div>
 
-            <q-separator color="grey" size="2px" class="q-mt-xl" />
+            <q-separator style="background: #302E53" size="2px" class="q-mt-xl" />
           </div>
         </template>
 
         <template v-slot:body="props">
-          <q-tr class="row justify-center q-my-xl q-pa-lg" :props="props" :style="props.rowIndex % 2 === 0 ? 'background: #FFEBEE' : ''">
-            <div class="flex q-col-gutter-xl" :style="props.rowIndex % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
-              <div class="col" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
-                <q-img class="rounded-borders" :src="props.row.imageUrl" :ratio="4/3">
+          <q-tr class="row q-mb-xl q-pa-lg" :props="props" :style="props.rowIndex % 2 === 0 ? 'background: #ECEFF1' : ''">
+            <div class="row" :style="props.rowIndex % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
+              <div class="col-sm-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
+                <q-img class="rounded-borders" :src="props.row.imageUrl" style="min-width: 380px" :ratio="1">
                   <template v-slot:error>
                     <div class="absolute-full flex flex-center bg-negative text-white">
                       Erro no servidor da imagem
@@ -42,14 +42,15 @@
                   </template>
                 </q-img>
               </div>
+              <q-space />
 
-              <div class="col">
-                <p style="font-size: 1rem; font-weight: bold; margin: 0">{{ props.row.title }}</p>
+              <div class="col-sm-6 col-xs-12">
+                <p class="titleText">{{ props.row.title }}</p>
                 <div class="flex justify-between">
                   <p>{{ dateFormated(props.row.publishedAt) }}</p>
                   <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="props.row.newsSite" />
                 </div>
-                <p style="letter-spacing: 0.1em;">{{ props.row.summary }}</p>
+                <p class="sumaryText">{{ props.row.summary }}</p>
                 <q-btn color="primary" label="Ver mais" />
               </div>
             </div>
@@ -113,10 +114,17 @@ export default {
 
 body
   font-family: 'Roboto Condensed'
-  color: #1E2022
 
 .container
   max-width: 960px
   margin: 3rem auto 0
+
+.titleText
+  font-size: 1rem
+  font-weight: bold
+  margin: 0
+
+.sumaryText
+  letter-spacing: 0.1em
 
 </style>
