@@ -5,6 +5,11 @@
 
       <q-dialog v-model="modal">
         <q-card>
+          <q-card-section class="row items-center q-pa-none">
+            <q-space />
+            <q-btn icon="close" flat round dense v-close-popup />
+          </q-card-section>
+
           <q-card-section>
             <div class="row">
               <div class="col-sm-5 col-xs-12">
@@ -30,7 +35,8 @@
 
           <q-card-section>
             <div class="col-12">
-              <div class="flex justify-end">
+              <div class="flex justify-end q-gutter-sm">
+                <q-btn color="dark" label="Voltar" v-close-popup />
                 <q-btn color="primary" label="Ir para o site" @click="toWebsite(articleModal.url)" />
               </div>
             </div>
