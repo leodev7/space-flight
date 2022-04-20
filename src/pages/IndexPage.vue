@@ -3,7 +3,7 @@
 
     <div class="container">
 
-      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
+      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[10]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
           <div class="col-12">
@@ -15,7 +15,7 @@
                 </template>
               </q-input>
 
-              <q-select item-aligned dense outlined v-model="sortSelected" :options="['Mais recente', 'Menos recente']" />
+              <q-select dense outlined v-model="sortSelected" :options="['desc', 'Menos recente']" map-options />
             </div>
           </div>
 
@@ -91,11 +91,40 @@ export default {
       filter: {
         title: ''
       },
-      sortSelected: 'Sort',
+      sortSelected: '',
       count: 10,
 
-      articlesColumns:[],
-      articlesData: []
+      articlesColumns:[
+        {
+          sortable: true
+        }
+      ],
+      articlesData: [],
+
+      customSort (rows, sortBy, descending) {
+        console.log(rows)
+        console.log(sortBy)
+        console.log(descending)
+        const data = [...rows]
+
+        if (sortBy) {
+          data.sort((a, b) => {
+            const x = descending ? b : a
+            const y = descending ? a : b
+
+            if (sortBy === 'name') {
+              // string sort
+              return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
+            }
+            else {
+              // numeric sort
+              return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
+            }
+          })
+        }
+
+        return data
+      }
     }
   },
 
