@@ -3,7 +3,7 @@
 
     <div class="container">
 
-      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[10]" @request="onLoadCurrentFilter" >
+      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
           <div class="col-12">
@@ -135,6 +135,8 @@ export default {
   methods: {
 
     onLoadCurrentFilter () {
+      this.$q.loading.show()
+
       this.$axios({ method: 'get', url: `https://api.spaceflightnewsapi.net/v3/articles?_limit=${this.count}` })
         .then((response) => {
           this.articlesData = response.data
@@ -142,6 +144,10 @@ export default {
         .catch((err) => {
           console.log(err)
         })
+        .finally(() => {
+          this.$q.loading.hide()
+        })
+
     },
 
     dateFormated (value) {
