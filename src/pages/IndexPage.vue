@@ -74,7 +74,7 @@
           <q-tr class="row q-mb-xl q-pa-lg" :props="props" :style="props.rowIndex % 2 === 0 ? 'background: #ECEFF1' : ''">
             <div class="row" :style="props.rowIndex % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
               <div class="col-md-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
-                <q-img class="rounded-borders" :src="props.row.imageUrl" :ratio="1">
+                <q-img class="rounded-borders image" :src="props.row.imageUrl" :ratio="1">
                   <template v-slot:error>
                     <q-img src="img/error-image.jpeg" />
                   </template>
@@ -232,6 +232,9 @@ body
   max-width: 960px
   margin: 3rem auto 0
 
+.image
+  min-width: 380px
+
 .titleText
   font-size: 1rem
   font-weight: bold
@@ -240,4 +243,7 @@ body
 .sumaryText
   letter-spacing: 0.1em
 
+@media (max-width: 400px)
+  .image
+    min-width: 0
 </style>
