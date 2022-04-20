@@ -243,7 +243,7 @@ body
 .sumaryText
   letter-spacing: 0.1em
 
-@media (max-width: 400px)
+@media (max-width: 500px)
   .image
     min-width: 0
 </style>
