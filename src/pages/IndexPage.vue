@@ -26,7 +26,7 @@
                 <p class="titleText">{{ articleModal.title }}</p>
                 <div class="flex justify-between">
                   <p>{{ dateFormated(articleModal.publishedAt) }}</p>
-                  <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="articleModal.newsSite" />
+                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="articleModal.newsSite" />
                 </div>
                 <p class="sumaryText">{{ articleModal.summary }}</p>
               </div>
@@ -36,21 +36,21 @@
           <q-card-section>
             <div class="col-12">
               <div class="flex justify-end q-gutter-sm">
-                <q-btn color="dark" label="Voltar" v-close-popup />
-                <q-btn color="primary" label="Ir para o site" @click="toWebsite(articleModal.url)" />
+                <q-btn color="purple" label="Voltar" v-close-popup />
+                <q-btn color="yellow" label="Ir para o site" @click="toWebsite(articleModal.url)" />
               </div>
             </div>
           </q-card-section>
         </q-card>
       </q-dialog>
 
-      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
+      <q-table class="no-shadow" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
           <div class="col-12">
             <div class="flex justify-end q-gutter-sm">
 
-              <q-input dense outlined color="black" v-model="filter.title" label="Search">
+              <q-input dense outlined color="dark" v-model="filter.title" label="Search">
                 <template v-slot:append>
                   <q-icon v-if="filter.title !== ''" name="close" @click="filter.title = ''" class="cursor-pointer" />
                 </template>
@@ -67,7 +67,7 @@
               <h5 class="q-my-none">Space Flight News</h5>
             </div>
 
-            <q-separator style="background: #302E53" size="2px" class="q-mt-xl" />
+            <q-separator color="dark" size="2px" class="q-mt-xl" />
           </div>
         </template>
 
@@ -87,10 +87,10 @@
                 <p class="titleText">{{ props.row.title }}</p>
                 <div class="flex justify-between">
                   <p>{{ dateFormated(props.row.publishedAt) }}</p>
-                  <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="props.row.newsSite" />
+                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="props.row.newsSite" />
                 </div>
                 <p class="sumaryText">{{ props.row.summary }}</p>
-                <q-btn color="primary" label="Ver mais" @click="showInfoModal(props.row)" />
+                <q-btn color="purple" label="Ver mais" @click="showInfoModal(props.row)" />
               </div>
             </div>
           </q-tr>
@@ -99,7 +99,7 @@
         <template v-slot:bottom>
           <div class="col-12 q-my-md">
             <div class="flex justify-center">
-              <q-btn color="primary" label="Carregar mais" @click="loadMore()" />
+              <q-btn color="purple" label="Carregar mais" @click="loadMore()" />
             </div>
           </div>
         </template>
@@ -115,7 +115,7 @@
       </q-table>
 
       <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
-        <q-btn fab icon="keyboard_arrow_up" color="indigo" />
+        <q-btn fab icon="keyboard_arrow_up" color="purple" />
       </q-page-scroller>
 
     </div>
@@ -130,18 +130,19 @@ export default {
   name: 'IndexPage',
   data () {
     return {
-      filter: {
-        title: ''
-      },
-      sortSelected: '',
-      count: 10,
       modal: false,
       articleModal: [],
 
       articlesColumns:[
         { name: 'publishedAt', sortable: true }
       ],
-      articlesData: []
+      articlesData: [],
+
+      filter: {
+        title: ''
+      },
+      // sortSelected: '',
+      count: 10
     }
   },
 
@@ -159,7 +160,7 @@ export default {
           this.articlesData = response.data
           var sortableClass = document.getElementsByClassName('sortable')[0]
           if (sortableClass) {
-            sortableClass.innerHTML = '<button class="q-btn q-btn--rectangle bg-primary text-white q-btn--actionable">Sortear por data</button>'
+            sortableClass.innerHTML = '<button class="q-btn q-btn--rectangle bg-purple text-white q-btn--actionable">Organizar por data</button>'
           }
         })
         .catch((err) => {
@@ -239,4 +240,5 @@ body
 @media (max-width: 500px)
   .image
     min-width: 0
+
 </style>
