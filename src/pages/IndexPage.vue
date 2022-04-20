@@ -157,6 +157,10 @@ export default {
       this.$axios({ method: 'get', url: `https://api.spaceflightnewsapi.net/v3/articles?_limit=${this.count}` })
         .then((response) => {
           this.articlesData = response.data
+          var sortableClass = document.getElementsByClassName('sortable')[0]
+          if (sortableClass) {
+            sortableClass.innerHTML = '<button class="q-btn q-btn--rectangle bg-primary text-white q-btn--actionable">Sortear por data</button>'
+          }
         })
         .catch((err) => {
           console.log(err)
