@@ -3,6 +3,41 @@
 
     <div class="container">
 
+      <q-dialog v-model="modal">
+        <q-card>
+          <q-card-section>
+            <div class="row">
+              <div class="col-sm-5 col-xs-12">
+                <q-img class="rounded-borders" :src="articleModal.imageUrl" :ratio="1">
+                  <template v-slot:error>
+                    <q-img src="img/error-image.jpeg" />
+                  </template>
+                </q-img>
+              </div>
+
+              <q-space class="q-mx-sm" />
+
+              <div class="col-sm-6 col-xs-12">
+                <p class="titleText">{{ articleModal.title }}</p>
+                <div class="flex justify-between">
+                  <p>{{ dateFormated(articleModal.publishedAt) }}</p>
+                  <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="articleModal.newsSite" />
+                </div>
+                <p class="sumaryText">{{ articleModal.summary }}</p>
+              </div>
+            </div>
+          </q-card-section>
+
+          <q-card-section>
+            <div class="col-12">
+              <div class="flex justify-end">
+                <q-btn color="primary" label="Ir para o site" @click="toWebsite(articleModal.url)" />
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
       <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" :sort-method="customSort" binary-state-sort hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
@@ -32,7 +67,7 @@
         <template v-slot:body="props">
           <q-tr class="row q-mb-xl q-pa-lg" :props="props" :style="props.rowIndex % 2 === 0 ? 'background: #ECEFF1' : ''">
             <div class="row" :style="props.rowIndex % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
-              <div class="col-sm-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
+              <div class="col-md-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
                 <q-img class="rounded-borders" :src="props.row.imageUrl" style="min-width: 380px" :ratio="1">
                   <template v-slot:error>
                     <q-img src="img/error-image.jpeg" />
@@ -41,14 +76,14 @@
               </div>
               <q-space />
 
-              <div class="col-sm-6 col-xs-12">
+              <div class="col-md-6 col-xs-12">
                 <p class="titleText">{{ props.row.title }}</p>
                 <div class="flex justify-between">
                   <p>{{ dateFormated(props.row.publishedAt) }}</p>
                   <q-chip dense square color="deep-orange" text-color="white" style="margin-top: 0" :label="props.row.newsSite" />
                 </div>
                 <p class="sumaryText">{{ props.row.summary }}</p>
-                <q-btn color="primary" label="Ver mais" />
+                <q-btn color="primary" label="Ver mais" @click="showInfoModal(props.row)" />
               </div>
             </div>
           </q-tr>
@@ -93,6 +128,8 @@ export default {
       },
       sortSelected: '',
       count: 10,
+      modal: false,
+      articleModal: [],
 
       articlesColumns:[
         {
@@ -157,7 +194,7 @@ export default {
     filterData(rows, terms) {
       for (const term in terms) { 
         rows = rows.filter(row =>
-          (row[term] + '').toLowerCase().indexOf(terms[term].toLowerCase()) !== -1
+          (row[term] + '').toLowerCase().includes(terms[term].toLowerCase())
         )
       }
       return rows
@@ -166,6 +203,15 @@ export default {
     loadMore () {
       this.count += 10
       this.onLoadCurrentFilter()
+    },
+
+    showInfoModal (data) {
+      this.articleModal = data
+      this.modal = true
+    },
+
+    toWebsite (url) {
+      window.open(url, '_blank')
     }
   }
 }
