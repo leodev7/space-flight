@@ -48,7 +48,7 @@
 
         <template v-slot:top>
           <div class="col-12">
-            <div class="flex justify-end q-col-gutter-sm">
+            <div class="flex justify-end q-gutter-sm">
 
               <q-input dense outlined color="black" v-model="filter.title" label="Search">
                 <template v-slot:append>
@@ -56,7 +56,8 @@
                 </template>
               </q-input>
 
-              <q-select dense outlined v-model="sortSelected" :options="['desc', 'Menos recente']" map-options />
+              <!-- <q-select dense outlined v-model="sortSelected" :options="['Mais recente', 'Menos recente']" />
+              <q-btn label="Ordem" @click="customSort(articlesData, 'publishedAt', articlesData.descending = !articlesData.descending )" /> -->
             </div>
           </div>
 
@@ -138,36 +139,9 @@ export default {
       articleModal: [],
 
       articlesColumns:[
-        {
-          sortable: true
-        }
+        { name: 'publishedAt', sortable: true }
       ],
-      articlesData: [],
-
-      customSort (rows, sortBy, descending) {
-        console.log(rows)
-        console.log(sortBy)
-        console.log(descending)
-        const data = [...rows]
-
-        if (sortBy) {
-          data.sort((a, b) => {
-            const x = descending ? b : a
-            const y = descending ? a : b
-
-            if (sortBy === 'name') {
-              // string sort
-              return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
-            }
-            else {
-              // numeric sort
-              return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
-            }
-          })
-        }
-
-        return data
-      }
+      articlesData: []
     }
   },
 
@@ -218,6 +192,21 @@ export default {
 
     toWebsite (url) {
       window.open(url, '_blank')
+    },
+
+    customSort (rows, sortBy, descending) {
+      const data = [ ...rows ]
+
+      if (sortBy) {
+        data.sort((a, b) => {
+          const x = descending ? b : a
+          const y = descending ? a : b
+
+          return x[sortBy] > y[sortBy] ? 1 : x[sortBy] < y[sortBy] ? -1 : 0
+        })
+      }
+
+      return data
     }
   }
 }
