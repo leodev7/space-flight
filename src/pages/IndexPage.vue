@@ -3,7 +3,7 @@
 
     <div class="container">
 
-      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[10]" @request="onLoadCurrentFilter" >
+      <q-table class="no-shadow no-border" :filter="filter" :filter-method="filterData" hide-pagination row-key="id" :rows="articlesData" :columns="articlesColumns" :rows-per-page-options="[0]" @request="onLoadCurrentFilter" >
 
         <template v-slot:top>
           <div class="col-12">
@@ -54,6 +54,14 @@
           </q-tr>
         </template>
 
+        <template v-slot:bottom>
+          <div class="col-12 q-my-md">
+            <div class="flex justify-center">
+              <q-btn color="primary" label="Carregar mais" @click="loadMore()" />
+            </div>
+          </div>
+        </template>
+
         <template v-slot:no-data>
           <div class="row full-width">
             <div class="q-mt-xs q-px-xs col-12">
@@ -80,6 +88,7 @@ export default {
         title: ''
       },
       sortSelected: 'Sort',
+      count: 10,
 
       articlesColumns:[],
       articlesData: []
@@ -93,7 +102,7 @@ export default {
   methods: {
 
     onLoadCurrentFilter () {
-      this.$axios({ method: 'get', url: 'https://api.spaceflightnewsapi.net/v3/articles' })
+      this.$axios({ method: 'get', url: `https://api.spaceflightnewsapi.net/v3/articles?_limit=${this.count}` })
         .then((response) => {
           this.articlesData = response.data
         })
@@ -113,6 +122,11 @@ export default {
         )
       }
       return rows
+    },
+
+    loadMore () {
+      this.count += 10
+      this.onLoadCurrentFilter()
     }
   }
 }
