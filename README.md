@@ -1,24 +1,33 @@
-# Space flight (space-flight)
+# Space flight
 
-Space flight news
+Space flight news é um challenge criado pela [Coodesh](https://coodesh.com/) para ser avaliado as habilidades de um Front-end developer, utilizando uma API pública com informações relacionadas a voos espaciais.
 
-## Install the dependencies
-```bash
-yarn
+[Video de apresentação](https://www.loom.com/embed/eb602561a56149dc82769434c0f1c49b)
+
+## 🛠 Tecnologias
+
+As seguintes ferramentas foram usadas na construção do projeto:
+
+- [Quasar](https://quasar.dev/)
+- [Vue.js](https://vuejs.org/)
+- [Sass](https://sass-lang.com/)
+
+## Instalar dependencias
+```
+yarn install
 # or
 npm install
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
+### Iniciar aplicação em modo desenvolvedor
+```
 quasar dev
 ```
 
 
-### Build the app for production
-```bash
+### Iniciar aplicação para produção
+```
 quasar build
 ```
 
-### Customize the configuration
-See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js).
+> This is a challenge by [Coodesh](https://coodesh.com/)
