@@ -142,7 +142,7 @@ export default {
         title: ''
       },
       // sortSelected: '',
-      count: 10
+      count: 2
     }
   },
 
