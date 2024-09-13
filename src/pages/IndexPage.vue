@@ -13,7 +13,7 @@
           <q-card-section>
             <div class="row">
               <div class="col-sm-5 col-xs-12">
-                <q-img class="rounded-borders" :src="articleModal.imageUrl" :ratio="1">
+                <q-img class="rounded-borders" :src="articleModal.image_url" :ratio="1">
                   <template v-slot:error>
                     <q-img src="img/error-image.jpeg" />
                   </template>
@@ -25,8 +25,8 @@
               <div class="col-sm-6 col-xs-12">
                 <p class="titleText">{{ articleModal.title }}</p>
                 <div class="flex justify-between">
-                  <p>{{ dateFormated(articleModal.publishedAt) }}</p>
-                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="articleModal.newsSite" />
+                  <p>{{ dateFormated(articleModal.published_at) }}</p>
+                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="articleModal.news_site" />
                 </div>
                 <p class="sumaryText">{{ articleModal.summary }}</p>
               </div>
@@ -75,7 +75,7 @@
           <q-tr class="row q-mb-xl q-pa-lg" :props="props" :style="props.rowIndex % 2 === 0 ? 'background: #ECEFF1' : ''">
             <div class="row" :style="props.rowIndex % 2 === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse'">
               <div class="col-md-5 col-xs-12" :style="props.rowIndex % 2 === 0 ? '' : 'text-align: right'">
-                <q-img class="rounded-borders image" :src="props.row.imageUrl" :ratio="1">
+                <q-img class="rounded-borders image" :src="props.row.image_url" :ratio="1">
                   <template v-slot:error>
                     <q-img src="img/error-image.jpeg" />
                   </template>
@@ -86,8 +86,8 @@
               <div class="col-md-6 col-xs-12">
                 <p class="titleText">{{ props.row.title }}</p>
                 <div class="flex justify-between">
-                  <p>{{ dateFormated(props.row.publishedAt) }}</p>
-                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="props.row.newsSite" />
+                  <p>{{ dateFormated(props.row.published_at) }}</p>
+                  <q-chip dense square color="yellow" text-color="white" style="margin-top: 0" :label="props.row.news_site" />
                 </div>
                 <p class="sumaryText">{{ props.row.summary }}</p>
                 <q-btn color="purple" label="Ver mais" @click="showInfoModal(props.row)" />
@@ -134,7 +134,7 @@ export default {
       articleModal: [],
 
       articlesColumns:[
-        { name: 'publishedAt', sortable: true }
+        { name: 'published_at', sortable: true }
       ],
       articlesData: [],
 
@@ -155,9 +155,9 @@ export default {
     onLoadCurrentFilter () {
       this.$q.loading.show()
 
-      this.$axios({ method: 'get', url: `https://api.spaceflightnewsapi.net/v3/articles?_limit=${this.count}` })
+      this.$axios({ method: 'get', url: `https://api.spaceflightnewsapi.net/v4/articles?_limit=${this.count}` })
         .then((response) => {
-          this.articlesData = response.data
+          this.articlesData = response.data.results
           var sortableClass = document.getElementsByClassName('sortable')[0]
           if (sortableClass) {
             sortableClass.innerHTML = '<button class="q-btn q-btn--rectangle bg-purple text-white q-btn--actionable">Organizar por data</button>'
